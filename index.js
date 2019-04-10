@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const slugify = require('slugify');
 const fs = require('fs');
 const allData = require('./db.json');
+const { baseUrl } = require('./settings');
 
 const allPhotos = [...allData.posts];
 
@@ -17,7 +18,6 @@ app.use(morgan('dev'));
 const projectIds = allPhotos.map(p => p.id);
 let nextProjectId = Math.max(...projectIds) + 1;
 
-const baseUrl = 'https://travel-api.jsx.fr';
 const NPP = 10;
 
 const slicePhotos = (arr, page) => {
