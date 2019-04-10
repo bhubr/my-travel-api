@@ -10,6 +10,7 @@ const allPhotos = [...allData.posts];
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.static('public'));
 app.use(cors());
 app.use(morgan('dev'));
 
@@ -88,5 +89,5 @@ app.post('/photos', (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 5095);
+app.listen(process.env.PORT || 5099);
 
