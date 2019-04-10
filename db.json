@@ -1,0 +1,176 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Macchu Picchu - Main sight",
+      "picture": "macchu-picchu-main-sight.jpg",
+      "tags": [
+        "incas",
+        "ancient civilizations"
+      ],
+      "country": "Peru",
+      "date": "2005-02-25"
+    },
+    {
+      "id": 2,
+      "title": "Macchu Picchu - From above",
+      "picture": "macchu-picchu-from-above.jpg",
+      "tags": [
+        "incas",
+        "ancient civilizations"
+      ],
+      "country": "Peru",
+      "date": "2005-02-25"
+    },
+    {
+      "id": 3,
+      "title": "Macchu Picchu - Details of a construction",
+      "picture": "macchu-picchu-details.jpg",
+      "tags": [
+        "incas",
+        "ancient civilizations"
+      ],
+      "country": "Peru",
+      "date": "2005-02-25"
+    },
+    {
+      "id": 4,
+      "title": "Laguna Verde - Bolivian altiplano",
+      "picture": "laguna-verde.jpg",
+      "tags": [
+        "sights",
+        "lakes"
+      ],
+      "country": "Bolivia",
+      "date": "2005-02-07"
+    },
+    {
+      "id": 5,
+      "title": "Laguna Colorada - Bolivian altiplano",
+      "picture": "laguna-colorada.jpg",
+      "tags": [
+        "sights",
+        "lakes"
+      ],
+      "country": "Bolivia",
+      "date": "2005-02-07"
+    },
+    {
+      "id": 6,
+      "title": "Laguna Miñiques - Atacama region",
+      "picture": "laguna-miniques.jpg",
+      "tags": [
+        "sights",
+        "lakes"
+      ],
+      "country": "Chile",
+      "date": "2005-02-05"
+    },
+    {
+      "id": 7,
+      "title": "Valle de la Luna - Atacama region",
+      "picture": "valle-de-la-luna.jpg",
+      "tags": [
+        "sights",
+        "desert"
+      ],
+      "country": "Chile",
+      "date": "2005-02-04"
+    },
+    {
+      "id": 8,
+      "title": "Teotihuacan - North of Mexico City",
+      "picture": "teotihuacan.jpg",
+      "tags": [
+        "ancient civilizations"
+      ],
+      "country": "Mexico",
+      "date": "2011-05-03"
+    },
+    {
+      "id": 9,
+      "title": "Monte Alban (Astronomical Observatory) - Oaxaca Region",
+      "picture": "monte-alban-observatory.jpg",
+      "tags": [
+        "zapotecs",
+        "ancient civilizations",
+        "astronomy"
+      ],
+      "country": "Mexico",
+      "date": "2011-02-06"
+    },
+    {
+      "id": 10,
+      "title": "Monte Alban - Oaxaca Region",
+      "picture": "monte-alban.jpg",
+      "tags": [
+        "zapotecs",
+        "ancient civilizations"
+      ],
+      "country": "Mexico",
+      "date": "2011-02-06"
+    },
+    {
+      "id": 11,
+      "title": "VLT - Cerro Paranal - Atacama",
+      "picture": "vlt-cerro-paranal.jpg",
+      "tags": [
+        "astronomy"
+      ],
+      "country": "Chile",
+      "date": "2005-01-24"
+    },
+    {
+      "id": 12,
+      "title": "VLT - Telescope enclosures - Atacama",
+      "picture": "vlt-enclosures.jpg",
+      "tags": [
+        "astronomy"
+      ],
+      "country": "Chile",
+      "date": "2005-01-24"
+    },
+    {
+      "id": 13,
+      "title": "Tulum - Quintana Roo",
+      "picture": "tulum.jpg",
+      "tags": [
+        "mayas",
+        "ancient civilizations"
+      ],
+      "country": "Mexico",
+      "date": "2011-03-29"
+    },
+    {
+      "id": 14,
+      "title": "Chichén Itzá - Yucatán",
+      "picture": "chichen-itza.jpg",
+      "tags": [
+        "mayas",
+        "ancient civilizations"
+      ],
+      "country": "Mexico",
+      "date": "2011-03-21"
+    },
+    {
+      "id": 15,
+      "title": "Tikal - Flores",
+      "picture": "tilal.jpg",
+      "tags": [
+        "mayas",
+        "ancient civilizations"
+      ],
+      "country": "Guatemala"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
