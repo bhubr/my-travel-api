@@ -3,7 +3,10 @@
     {
       "id": 1,
       "title": "Macchu Picchu - Main sight",
-      "picture": "macchu-picchu-main-sight.jpg",
+      "picture": {
+        "small": "/img/small/macchu-picchu-main-sight.jpg",
+        "medium": "/img/medium/macchu-picchu-main-sight.jpg"
+      },
       "tags": [
         "incas",
         "ancient civilizations"
@@ -14,7 +17,10 @@
     {
       "id": 2,
       "title": "Macchu Picchu - From above",
-      "picture": "macchu-picchu-from-above.jpg",
+      "picture": {
+        "small": "/img/small/macchu-picchu-from-above.jpg",
+        "medium": "/img/medium/macchu-picchu-from-above.jpg"
+      },
       "tags": [
         "incas",
         "ancient civilizations"
@@ -25,7 +31,10 @@
     {
       "id": 3,
       "title": "Macchu Picchu - Details of a construction",
-      "picture": "macchu-picchu-details.jpg",
+      "picture": {
+        "small": "/img/small/macchu-picchu-details.jpg",
+        "medium": "/img/medium/macchu-picchu-details.jpg"
+      },
       "tags": [
         "incas",
         "ancient civilizations"
@@ -36,7 +45,10 @@
     {
       "id": 4,
       "title": "Laguna Verde - Bolivian altiplano",
-      "picture": "laguna-verde.jpg",
+      "picture": {
+        "small": "/img/small/laguna-verde.jpg",
+        "medium": "/img/medium/laguna-verde.jpg"
+      },
       "tags": [
         "sights",
         "lakes"
@@ -47,7 +59,10 @@
     {
       "id": 5,
       "title": "Laguna Colorada - Bolivian altiplano",
-      "picture": "laguna-colorada.jpg",
+      "picture": {
+        "small": "/img/small/laguna-colorada.jpg",
+        "medium": "/img/medium/laguna-colorada.jpg"
+      },
       "tags": [
         "sights",
         "lakes"
@@ -58,7 +73,10 @@
     {
       "id": 6,
       "title": "Laguna Miñiques - Atacama region",
-      "picture": "laguna-miniques.jpg",
+      "picture": {
+        "small": "/img/small/laguna-miniques.jpg",
+        "medium": "/img/medium/laguna-miniques.jpg"
+      },
       "tags": [
         "sights",
         "lakes"
@@ -69,7 +87,10 @@
     {
       "id": 7,
       "title": "Valle de la Luna - Atacama region",
-      "picture": "valle-de-la-luna.jpg",
+      "picture": {
+        "small": "/img/small/valle-de-la-luna.jpg",
+        "medium": "/img/medium/valle-de-la-luna.jpg"
+      },
       "tags": [
         "sights",
         "desert"
@@ -80,7 +101,10 @@
     {
       "id": 8,
       "title": "Teotihuacan - North of Mexico City",
-      "picture": "teotihuacan.jpg",
+      "picture": {
+        "small": "/img/small/teotihuacan.jpg",
+        "medium": "/img/medium/teotihuacan.jpg"
+      },
       "tags": [
         "ancient civilizations"
       ],
@@ -90,7 +114,10 @@
     {
       "id": 9,
       "title": "Monte Alban (Astronomical Observatory) - Oaxaca Region",
-      "picture": "monte-alban-observatory.jpg",
+      "picture": {
+        "small": "/img/small/monte-alban-observatory.jpg",
+        "medium": "/img/medium/monte-alban-observatory.jpg"
+      },
       "tags": [
         "zapotecs",
         "ancient civilizations",
@@ -102,7 +129,10 @@
     {
       "id": 10,
       "title": "Monte Alban - Oaxaca Region",
-      "picture": "monte-alban.jpg",
+      "picture": {
+        "small": "/img/small/monte-alban.jpg",
+        "medium": "/img/medium/monte-alban.jpg"
+      },
       "tags": [
         "zapotecs",
         "ancient civilizations"
@@ -113,7 +143,10 @@
     {
       "id": 11,
       "title": "VLT - Cerro Paranal - Atacama",
-      "picture": "vlt-cerro-paranal.jpg",
+      "picture": {
+        "small": "/img/small/vlt-cerro-paranal.jpg",
+        "medium": "/img/medium/vlt-cerro-paranal.jpg"
+      },
       "tags": [
         "astronomy"
       ],
@@ -123,7 +156,10 @@
     {
       "id": 12,
       "title": "VLT - Telescope enclosures - Atacama",
-      "picture": "vlt-enclosures.jpg",
+      "picture": {
+        "small": "/img/small/vlt-enclosures.jpg",
+        "medium": "/img/medium/vlt-enclosures.jpg"
+      },
       "tags": [
         "astronomy"
       ],
@@ -133,7 +169,10 @@
     {
       "id": 13,
       "title": "Tulum - Quintana Roo",
-      "picture": "tulum.jpg",
+      "picture": {
+        "small": "/img/small/tulum.jpg",
+        "medium": "/img/medium/tulum.jpg"
+      },
       "tags": [
         "mayas",
         "ancient civilizations"
@@ -144,7 +183,10 @@
     {
       "id": 14,
       "title": "Chichén Itzá - Yucatán",
-      "picture": "chichen-itza.jpg",
+      "picture": {
+        "small": "/img/small/chichen-itza.jpg",
+        "medium": "/img/medium/chichen-itza.jpg"
+      },
       "tags": [
         "mayas",
         "ancient civilizations"
@@ -155,7 +197,11 @@
     {
       "id": 15,
       "title": "Tikal - Flores",
-      "picture": "tilal.jpg",
+      "picture": {
+        "small": "/img/small/tikal.jpg",
+        "medium": "/img/medium/tikal.jpg"
+      },
+      "picture": "tikal.jpg",
       "tags": [
         "mayas",
         "ancient civilizations"
