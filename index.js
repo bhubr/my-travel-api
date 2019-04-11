@@ -25,6 +25,12 @@ const slicePhotos = (arr, page) => {
   return arr.slice(start, start + NPP);
 }
 
+app.get('/', (req, res) => {
+  res.json({
+    photos: `${baseUrl}/photos`
+  });
+});
+
 app.get('/photos', (req, res) => {
   const page = req.query.page ? Number(req.query.page) : 1;
   const results = slicePhotos(allPhotos, page);
