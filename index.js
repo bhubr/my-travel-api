@@ -69,9 +69,10 @@ const assignUser = (photo, allUsers) => {
 };
 
 const formatPhoto = photo => {
+  const src = photo.picture.replace('.jpg', '.jpeg');
   const picture = {
-    small: `/img/small/${photo.picture}`,
-    medium: `/img/medium/${photo.picture}`,
+    small: `/img/small/${src}`,
+    medium: `/img/medium/${src}`,
     // large: `/img/large/${photo.picture}`,
   };
   return { ...photo, picture, date: photo.date.toISOString().substr(0, 10) };
