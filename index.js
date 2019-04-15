@@ -1,11 +1,13 @@
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const slugify = require('slugify');
-const fs = require('fs');
+const _ = require('lodash');
 const allData = require('./db.json');
 const { baseUrl } = require('./settings');
+const db = require('./db');
 
 const allPhotos = [...allData.posts];
 
@@ -25,38 +27,116 @@ const slicePhotos = (arr, page) => {
   return arr.slice(start, start + NPP);
 }
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   res.json({
     photos: `${baseUrl}/photos`
   });
 });
 
-app.get('/photos', (req, res) => {
-  const page = req.query.page ? Number(req.query.page) : 1;
-  const results = slicePhotos(allPhotos, page);
-  const totalPages = Math.ceil(allPhotos.length / NPP);
-  const totalResults = allPhotos.length;
-  const next = page < totalPages ? `${baseUrl}/photos?page=${page + 1}` : null;
-  res.json({
-    results, page, totalPages, totalResults, next
-  });
+const getTags = async photos => {
+  const whereCriteria = photos.length
+    ? `p.id IN (${photos.map(p => p.id)})` : '0';
+  const tags = await db.query(`
+    SELECT t.id as id,t.name as name,pt.photoId as pid
+    FROM tag t
+    INNER JOIN photo_tag pt on t.id=pt.tagId
+    INNER JOIN photo p on p.id=pt.photoId
+    WHERE ${whereCriteria}
+  `);
+  const groupedTags = _.groupBy(tags, 'pid');
+  return groupedTags;
+};
+
+const getAuthors = async photos => {
+  const whereCriteria = photos.length
+    ? `u.id IN (${photos.map(p => p.authorId)})` : '0';
+  const users = await db.query(`
+    SELECT u.id, u.login FROM user u
+    INNER JOIN photo p on p.authorId=u.id
+    WHERE ${whereCriteria}
+  `);
+  const groupedUsers = _.groupBy(users, 'id');
+  return groupedUsers;
+};
+
+const assignTags = (photo, allTags) => {
+  const tags = allTags[photo.id] || [];
+  photo.tags = tags.map(({ id, name }) => ({ id, name }));
+};
+
+const assignUser = (photo, allUsers) => {
+  photo.author = allUsers[photo.authorId][0];
+};
+
+const formatPhoto = photo => {
+  const picture = {
+    small: `/img/small/${photo.picture}`,
+    medium: `/img/medium/${photo.picture}`,
+    // large: `/img/large/${photo.picture}`,
+  };
+  return { ...photo, picture, date: photo.date.toISOString().substr(0, 10) };
+}
+
+app.get('/photos', async (req, res) => {
+  try {
+    const page = req.query.page ? Number(req.query.page) : 1;
+    const [{ count }] = await db.query('SELECT COUNT(id) AS count FROM photo WHERE approved = 1');
+    const records = await db.query(`SELECT id, authorId, title, picture, country, date FROM photo WHERE approved = 1 ORDER BY id ASC LIMIT ${(page - 1) * 10},10`);
+    const results = records.map(formatPhoto);
+    const tags = await getTags(results);
+    const authors = await getAuthors(results);
+    results.forEach(photo => assignTags(photo, tags));
+    results.forEach(photo => assignUser(photo, authors));
+    const totalPages = Math.ceil(count / NPP);
+    const next = page < totalPages ? `${baseUrl}/photos?page=${page + 1}` : null;
+    return res.json({
+      results, page, totalPages, totalResults: count, next
+    });
+  } catch(e) {
+    return res.status(500).json({
+      error: e.message,
+      sql: e.sql
+    });
+  }
 });
 
-app.get('/photos/:idOrSlug', (req, res) => {
-  const project = allPhotos.find(
-    p => p.id === Number(req.params.idOrSlug) || p.slug === req.params.idOrSlug
-  );
-  if (!project) {
+app.get('/photos/:idOrSlug', async (req, res) => {
+  const records = await db.query('SELECT id, authorId, title, picture, country, date FROM photo WHERE id = ? AND approved = 1', req.params.idOrSlug);
+  if (!records.length) {
     return res.status(404).json({ error: 'Photo not found' });
   }
-  return res.json(project);
+  const photo = records[0];
+  const tags = await getTags(records);
+  const authors = await getAuthors(records);
+  assignTags(photo, tags);
+  assignUser(photo, authors);
+  return res.json(photo);
 });
 
-app.post('/photos', (req, res) => {
+const checkApiKey = async (req, res, next) => {
+  try {
+    const key = req.query.apiKey || '';
+    const users = await db.query('SELECT * FROM user WHERE apiKey = ?', key);
+    if (!users.length) {
+      return res.status(401).json({
+        error: 'Unauthorized - wrong or missing API key - provide a correct apiKey in URL parameters'
+      });
+    }
+    req.user = users[0];
+  } catch(e) {
+    return res.status(500).json({
+      error: e.message,
+      sql: e.sql
+    });
+  }
+  return next();
+};
+
+app.post('/photos', checkApiKey, async (req, res) => {
   try {
     const errors = [];
-    const required = ['title', 'link', 'repo', 'picture', 'promo', 'type'];
-    const optional = ['description', 'techno'];
+    const required = ['title', 'picture', 'country', 'date'];
+    const optional = ['tags'];
     const all = [...required, ...optional];
     if (!req.body || typeof req.body !== 'object') {
       errors.push('request body is empty or not an object');
@@ -76,19 +156,11 @@ app.post('/photos', (req, res) => {
       console.error(errors);
       return res.status(400).json({ errors });
     }
-    const slug = slugify(req.body.title, {
-      replacement: '-',
-      remove: /[*+~.()'"!:@]/g,
-      lower: true
-    });
-    const date = new Date().toISOString();
-    const newProject = { ...req.body, id: nextProjectId, slug, date };
-    nextProjectId += 1;
-    allPhotos.push(newProject);
-    fs.writeFile('portfolio-projects-db.json', JSON.stringify(allPhotos, null, 2), (err) => {
-      if (err) return res.status(500).json({ errors: [err.message] });
-      return res.json(newProject);
-    });
+    const payload = { ...req.body, authorId: req.user.id };
+    const { insertId } = await db.query('INSERT INTO photo SET ?', payload);
+    const photos = await db.query('SELECT * FROM photo WHERE id = ?', insertId);
+    const photo = { ...photos[0] };
+    return res.json(photo);
   } catch(e) {
     console.error(e);
     return res.status(500).json({ errors: [e.message] });
