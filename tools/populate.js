@@ -18,7 +18,8 @@ Promise.reduce(
       title,
       picture: getPicture(picture),
       country,
-      date
+      date,
+      authorId: 1,
     };
     // console.log(payload);
     const { insertId: photoId } = await db.query('INSERT INTO photo SET ?', payload);
