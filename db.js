@@ -2,11 +2,18 @@ const mysql = require('mysql');
 const { promisify } = require('util');
 const settings = require('./settings');
 
-const connection = mysql.createConnection(settings.mysql);
-const query = promisify(connection.query.bind(connection));
+let mysqlSettings = settings.mysql;
+if (
+  process.env.NODE_ENV === 'production' &&
+  typeof mysqlSettings === 'string'
+) {
+  console.log('using prod env');
+  mysqlSettings += '&multipleStatements=true';
+}
 
-setInterval(() => connection.query('SELECT 1'), 30000);
+const pool = mysql.createConnection(mysqlSettings);
+const query = promisify(pool.query.bind(pool));
 
 module.exports = {
-  query: async (...args) => query(...args)
+  query: async (...args) => query(...args),
 };

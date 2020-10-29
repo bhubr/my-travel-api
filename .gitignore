@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
 package-lock.json
-settings.js
-
+yarn.lock
+pnpm-lock.yaml
+.env

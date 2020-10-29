@@ -8,7 +8,7 @@ create table user (
 
 create table photo (
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  authorId INTEGER NOT NULL,
+  authorId INTEGER NULL,
   title VARCHAR(100),
   picture VARCHAR(150),
   country VARCHAR(50),
