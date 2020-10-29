@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "build": "node tools/populate"
   },
   "author": "",
   "license": "ISC",
