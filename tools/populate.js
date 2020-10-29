@@ -64,7 +64,7 @@ const populatePhotos = async () =>
 
 const createTables = async () => db.query(schemaSql);
 
-const doPopulate = async () => {
+const dbPopulate = async () => {
   console.log('creating tables');
   await createTables();
   console.log('injecting data');
