@@ -71,4 +71,10 @@ const dbPopulate = async () => {
   await populatePhotos();
 };
 
-dbPopulate();
+const dbUpdate = async () => {
+  await db.query(
+    "UPDATE photo SET approved = 1, date = '2011-04-02' WHERE date IS NULL",
+  );
+};
+
+dbUpdate();
