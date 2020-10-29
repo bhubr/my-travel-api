@@ -64,7 +64,7 @@ const getAuthors = async (photos) => {
 
 const assignTags = (photo, allTags) => {
   const tags = allTags[photo.id] || [];
-  photo.tags = tags.map(({ id, name }) => ({ id, name }));
+  photo.tags = tags.map(({ name }) => name);
 };
 
 const assignUser = (photo, allUsers) => {
