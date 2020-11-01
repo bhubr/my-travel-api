@@ -1,13 +1,9 @@
 const mysql = require('mysql');
 const { promisify } = require('util');
-const settings = require('./settings');
+const settings = require('../settings');
 
 let mysqlSettings = settings.mysql;
-if (
-  process.env.NODE_ENV === 'production' &&
-  typeof mysqlSettings === 'string'
-) {
-  console.log('using prod env');
+if (process.env.NODE_ENV === 'production' && typeof mysqlSettings === 'string') {
   mysqlSettings += '&multipleStatements=true';
 }
 

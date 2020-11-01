@@ -1,9 +1,0 @@
-{
-  "baseUrl": "https://baseurl.example.com",
-  "mysql": {
-    "host": "localhost",
-    "database": "db",
-    "user": "user",
-    "password": "pwd"
-  }
-}

@@ -2,10 +2,11 @@
   "name": "wcs-video-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "lint": "npx eslint --ext .js --fix src/",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index",
+    "start": "node src/index",
     "start:dev": "nodemon"
   },
   "author": "",
