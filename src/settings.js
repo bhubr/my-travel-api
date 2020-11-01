@@ -8,4 +8,5 @@ const mysql = process.env.CLEARDB_DATABASE_URL || {
 module.exports = {
   baseUrl: process.env.BASE_URL,
   mysql,
+  npp: 5,
 };
