@@ -2,6 +2,7 @@ const showdown = require('showdown');
 const fs = require('fs');
 const path = require('path');
 
+// eslint-disable-next-line arrow-parens
 const readFile = relPath => {
   const filePath = path.resolve(__dirname, '../', relPath);
   return fs.readFileSync(filePath, 'utf8');

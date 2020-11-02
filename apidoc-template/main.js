@@ -53,21 +53,7 @@ require([
     'pathToRegexp',
     'list'
 ], function($, _, locale, Handlebars, apiProject, apiData, Prism, sampleRequest, semver, WebFont) {
-
-    // Load google web fonts.
-    WebFont.load({
-        active: function() {
-            // Only init after fonts are loaded.
-            init($, _, locale, Handlebars, apiProject, apiData, Prism, sampleRequest, semver);
-        },
-        inactive: function() {
-            // Run init, even if loading fonts fails
-            init($, _, locale, Handlebars, apiProject, apiData, Prism, sampleRequest, semver);
-        },
-        google: {
-            families: ['Source Code Pro', 'Source Sans Pro:n4,n6,n7']
-        }
-    });
+    init($, _, locale, Handlebars, apiProject, apiData, Prism, sampleRequest, semver);
 });
 
 function init($, _, locale, Handlebars, apiProject, apiData, Prism, sampleRequest, semver) {
