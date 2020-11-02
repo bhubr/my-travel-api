@@ -7,6 +7,8 @@ const mysql = process.env.CLEARDB_DATABASE_URL || {
 
 module.exports = {
   baseUrl: process.env.BASE_URL,
+  cookieSecret: process.env.COOKIE_SECRET || 'Cookie::Secret',
+  jwtSecret: process.env.JWT_SECRET || 'JWT::Secret',
   mysql,
   npp: 5,
 };

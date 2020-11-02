@@ -16,9 +16,11 @@
   "dependencies": {
     "bluebird": "^3.5.4",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
     "json-server": "^0.14.2",
     "lodash": "^4.17.20",
     "morgan": "^1.9.1",
@@ -29,6 +31,7 @@
     "apidoc": "^0.25.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.17.1",
     "nodemon": "^1.18.11",
     "showdown": "^1.9.1"
