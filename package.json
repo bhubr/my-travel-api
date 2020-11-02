@@ -1,10 +1,11 @@
 {
-  "name": "wcs-video-api",
+  "name": "my-travel-api",
+  "homepage": "https://mytravelapi.herokuapp.com",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "build:doc": "apidoc -i src/ -o public/docs/ -t node_modules/apidoc/template/",
+    "build:docs": "apidoc -i src/ -o public/docs/ -t apidoc-template/",
     "lint": "npx eslint --ext .js --fix src/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index",
@@ -29,6 +30,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.1",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "showdown": "^1.9.1"
   }
 }
