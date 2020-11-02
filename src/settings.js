@@ -9,6 +9,11 @@ module.exports = {
   baseUrl: process.env.BASE_URL,
   cookieSecret: process.env.COOKIE_SECRET || 'Cookie::Secret',
   jwtSecret: process.env.JWT_SECRET || 'JWT::Secret',
+  oauth: {
+    clientId: process.env.OAUTH_CLIENT_ID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    redirectUri: process.env.OAUTH_REDIRECT_URI,
+  },
   mysql,
   npp: 5,
 };

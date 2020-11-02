@@ -8,7 +8,7 @@ Feel free to report any problem you encounter on the GitHub repository's [issues
 
 ## Basic API usage
 
-The simplest way to use this API is to query the main endpoint: <{{homepage}}/photos>.
+The simplest way to use this API is to query the main endpoint: <{{baseUrl}}/photos>.
 
 Detailed [API docs](docs) (auto-generated with [apiDoc](https://apidocjs.com/)) are provided.
 

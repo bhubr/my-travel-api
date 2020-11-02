@@ -1,6 +1,7 @@
 const showdown = require('showdown');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
 // eslint-disable-next-line arrow-parens
 const readFile = relPath => {
@@ -15,12 +16,9 @@ const writeFile = (relPath, data) => {
 
 const readmeTmpl = readFile('docsrc/readme.md');
 const publicIndexTmpl = readFile('docsrc/index.html');
-const packageJson = readFile('package.json');
-
-const { homepage } = JSON.parse(packageJson);
 
 const converter = new showdown.Converter();
-const readme = readmeTmpl.replace('{{homepage}}', homepage);
+const readme = readmeTmpl.replace('{{baseUrl}}', process.env.BASE_URL);
 const readmeHtml = converter.makeHtml(readme);
 const indexHtml = publicIndexTmpl.replace('{{readme}}', readmeHtml);
 
