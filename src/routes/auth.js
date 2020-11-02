@@ -16,6 +16,15 @@ router.get('/oauth-params', async (req, res) =>
   }),
 );
 
+async function getGitHubUser(accessToken) {
+  const profileUrl = 'https://api.github.com/user';
+  return axios
+    .get(profileUrl, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+    .then(response => response.data);
+}
+
 // TODO: restrict CORS
 router.get('/access-token', async (req, res) => {
   const { code } = req.query;
@@ -36,7 +45,10 @@ router.get('/access-token', async (req, res) => {
     if (responsePayload.error) {
       return res.status(401).json({ error: responsePayload.error });
     }
-    return res.json(responsePayload);
+    console.log(responsePayload);
+    const { access_token: accessToken } = responsePayload;
+    const user = await getGitHubUser(accessToken);
+    return res.json(user);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: err.message });
