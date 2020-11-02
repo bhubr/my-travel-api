@@ -5,7 +5,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "build:docs": "apidoc -i src/ -o public/docs/ -t apidoc-template/",
+    "build:docs": "node tools/build-homepage && apidoc -i src/ -o public/docs/ -t apidoc-template/",
     "lint": "npx eslint --ext .js --fix src/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index",
