@@ -2,14 +2,20 @@ body {
   padding-top: 60px;
 }
 
+/* Navbar */
+.icon-github {
+  margin-right: 0.5em;
+}
+
+/* Content part */
 main {
   font-size: 18px;
 }
 
-h1 {
+main h1 {
   margin-bottom: 0.75em;
 }
 
-h2 {
+main h2 {
   margin: 1.5em 0 0.5em;
 }
