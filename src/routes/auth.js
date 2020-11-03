@@ -51,6 +51,14 @@ router.get('/access-token', async (req, res) => {
     scope: 'user:email',
   });
 
+  const payloadCpy = codePayload.replace(
+    clientSecret,
+    clientSecret.substr(0, 4) +
+      '*'.repeat(clientSecret.length - 8) +
+      clientSecret.substr(clientSecret.length - 4),
+  );
+  console.log(payloadCpy);
+
   try {
     const { data } = await axios.post(oAuthTokenEndpoint, codePayload);
     const responsePayload = qs.parse(data);
