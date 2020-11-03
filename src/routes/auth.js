@@ -12,11 +12,14 @@ const {
 const router = express.Router();
 
 // TODO: restrict CORS
-router.get('/oauth-params', async (req, res) =>
-  res.json({
-    clientId,
-    redirectUri,
-  }),
+router.get(
+  '/oauth-params',
+  async (req, res) =>
+    console.log('#### oauth params', clientId, redirectUri) ||
+    res.json({
+      clientId,
+      redirectUri,
+    }),
 );
 
 async function getGitHubUser(accessToken) {
