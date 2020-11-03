@@ -27,7 +27,16 @@
         </a>
       </li>
     </script>
-    <script id="template-navbar-user" type="text/x-handlebars-template"></script>
+    <script id="template-navbar-user" type="text/x-handlebars-template">
+      <li>
+        <a id='signout' href='#'>
+          Sign out
+        </a>
+      </li>
+      <li>
+        <img class='navbar-avatar' src='{{avatar}}' alt='{{login}}' />
+      </li>
+    </script>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->

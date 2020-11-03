@@ -61,13 +61,13 @@ router.get('/access-token', async (req, res) => {
     const jwtPayload = { ...user, gitHubId, login, avatar };
     const token = await jwt.sign(jwtPayload, jwtSecret);
     res.cookie('jwt', token, { sign: true, httpOnly: true });
-    return res.json(user);
+    return res.json(jwtPayload);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: err.message });
   }
 });
 
-router.get('/profile', checkJwtCookie, async (req, res) => {});
+router.get('/profile', checkJwtCookie, async (req, res) => res.json(req.user));
 
 module.exports = router;

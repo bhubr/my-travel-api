@@ -7,6 +7,10 @@ body {
   margin-right: 0.5em;
 }
 
+img.navbar-avatar {
+  max-height: 60px;
+}
+
 /* Content part */
 #main {
   font-size: 18px;

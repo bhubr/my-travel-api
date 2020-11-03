@@ -6,12 +6,13 @@ const checkJwtCookie = expressJwt({
   algorithms: ['HS256'],
   credentialsRequired: true,
   getToken: req => {
-    const { headers, cookie } = req;
+    const { headers, cookies } = req;
+    console.log(headers, cookies);
     if (headers.authorization && headers.authorization.split(' ')[0] === 'Bearer') {
       return headers.authorization.split(' ')[1];
     }
-    if (cookie && cookie.jwt) {
-      return cookie.jwt;
+    if (cookies && cookies.jwt) {
+      return cookies.jwt;
     }
     return null;
   },

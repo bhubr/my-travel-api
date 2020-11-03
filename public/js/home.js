@@ -24,10 +24,14 @@ require.config({
 });
 
 async function checkProfile() {
-  return fetch('/auth/profile')
+  return fetch('/auth/profile', {
+    credentials: 'include',
+  })
     .then(res => {
       if (!res.ok) {
-        console.error(res.status);
+        if (res.status === 401) {
+          throw new Error('401 Unauthorized');
+        }
         throw new Error('Could not get profile');
       }
       return res.json();
@@ -47,7 +51,9 @@ async function getOAuthParams() {
 }
 
 async function requestAccessToken(code) {
-  return fetch(`/auth/access-token?code=${code}`).then(res => {
+  return fetch(`/auth/access-token?code=${code}`, {
+    credentials: 'include',
+  }).then(res => {
     if (!res.ok) {
       console.error(res.status);
       throw new Error('Could not get access token');
@@ -126,10 +132,15 @@ async function checkOAuthCode() {
  * @returns {boolean} user data if we're authenticated, null otherwise
  */
 async function getAuthStatus() {
+  console.log('checking oauth code...');
   const [errCode, profile1] = await checkOAuthCode();
   if (errCode || profile1) return [errCode, profile1];
 
-  const [errProfile, profile2] = await checkOAuthCode();
+  console.log('checking profile...');
+  const [errProfile, profile2] = await checkProfile();
+  if (errProfile && errProfile.message === '401 Unauthorized') {
+    return [null, null];
+  }
   return [errProfile, profile2];
 }
 
@@ -147,7 +158,7 @@ async function initHome($, Handlebars, Prism) {
   if (errAuth) {
     displayAlert('danger', errAuth.message);
   } else if (profile) {
-    $('#navbar-right').html(templateNavbarUser({}));
+    $('#navbar-right').html(templateNavbarUser(profile));
   } else {
     $('#navbar-right').html(templateNavbarGuest({}));
     $('#signin').click(oauthSignIn);
