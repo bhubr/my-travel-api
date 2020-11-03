@@ -28,10 +28,17 @@ async function getGitHubUser(accessToken) {
     .then(response => response.data);
 }
 
-const getUserByGitHubId = async gitHubId => {
+async function getUserByGitHubId(gitHubId) {
   const [user] = await db.query('SELECT id FROM user WHERE githubId = ?', [gitHubId]);
   return user;
-};
+}
+
+async function createUser({ id: gitHubId, login, email }) {
+  const userPayload = { gitHubId, login, email, role: 'user' };
+  console.log('inserting', userPayload);
+  await db.query('INSERT INTO user SET ?', [userPayload]);
+  return getUserByGitHubId(gitHubId);
+}
 
 // TODO: restrict CORS
 router.get('/access-token', async (req, res) => {
@@ -57,7 +64,10 @@ router.get('/access-token', async (req, res) => {
     const { access_token: accessToken } = responsePayload;
     const gitHubUser = await getGitHubUser(accessToken);
     const { id: gitHubId, login, avatar_url: avatar } = gitHubUser;
-    const user = await getUserByGitHubId(gitHubId);
+    let user = await getUserByGitHubId(gitHubId);
+    if (!user) {
+      user = await createUser(gitHubUser);
+    }
     const jwtPayload = { ...user, gitHubId, login, avatar };
     const token = await jwt.sign(jwtPayload, jwtSecret);
     res.cookie('jwt', token, { sign: true, httpOnly: true });
