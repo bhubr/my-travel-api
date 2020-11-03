@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS migration(
+  id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  performedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  status ENUM('success', 'failure')
+);

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable import/no-amd */
 /* eslint-disable import/no-dynamic-require */
 require.config({
@@ -22,14 +23,17 @@ require.config({
   waitSeconds: 150,
 });
 
-function checkProfile() {
-  return fetch('/auth/profile').then(res => {
-    if (!res.ok) {
-      console.error(res.status);
-      throw new Error('Could not get profile');
-    }
-    return res.json();
-  });
+async function checkProfile() {
+  return fetch('/auth/profile')
+    .then(res => {
+      if (!res.ok) {
+        console.error(res.status);
+        throw new Error('Could not get profile');
+      }
+      return res.json();
+    })
+    .then(profile => [null, profile])
+    .catch(err => [err, null]);
 }
 
 async function getOAuthParams() {
@@ -73,7 +77,7 @@ async function oauthSignIn() {
       client_id: clientId,
       redirect_uri: redirectUri,
       response_type: 'token',
-      scope: 'user-read-private user-read-email',
+      scope: 'user:email',
       state: 'pass-through value',
     };
 
@@ -104,39 +108,54 @@ function getCodeFromLocationQuery() {
 
 async function checkOAuthCode() {
   const oAuthCode = getCodeFromLocationQuery();
-  console.log(oAuthCode);
-  if (!oAuthCode) return;
+  // No error, no code
+  if (!oAuthCode) return [null, null];
 
-  await requestAccessToken(oAuthCode);
   history.pushState(null, '', '/');
+  return requestAccessToken(oAuthCode)
+    .then(profile => [null, profile])
+    .catch(err => [err, null]);
 }
 
-async function init($, Handlebars, Prism) {
+/**
+ * Verify authentication
+ *
+ * 1. check if we're getting an OAuth code => request JWT
+ * 2. if we're not, check profile
+ *
+ * @returns {boolean} user data if we're authenticated, null otherwise
+ */
+async function getAuthStatus() {
+  const [errCode, profile1] = await checkOAuthCode();
+  if (errCode || profile1) return [errCode, profile1];
+
+  const [errProfile, profile2] = await checkOAuthCode();
+  return [errProfile, profile2];
+}
+
+async function initHome($, Handlebars, Prism) {
   const templateNavbarGuest = Handlebars.compile($('#template-navbar-guest').html());
   const templateNavbarUser = Handlebars.compile($('#template-navbar-user').html());
+  const templateAlert = Handlebars.compile($('#template-alert').html());
 
-  try {
-    await checkOAuthCode();
-  } catch (err) {
-    console.error(err);
+  function displayAlert(status, message) {
+    const html = templateAlert({ status, message });
+    $('#alert').html(html).show();
   }
 
-  checkProfile()
-    .then(profile => {
-      console.log('logged in');
-      $('#navbar-right').html(templateNavbarUser);
-    })
-    .catch(err => {
-      console.log('not logged in', err);
-      $('#navbar-right').html(templateNavbarGuest);
-      $('#signin').click(oauthSignIn);
-    })
-    .finally(() => {
-      $('#main').removeClass('main-hidden');
-      $('#loader').hide();
-    });
+  const [errAuth, profile] = await getAuthStatus();
+  if (errAuth) {
+    displayAlert('danger', errAuth.message);
+  } else if (profile) {
+    $('#navbar-right').html(templateNavbarUser({}));
+  } else {
+    $('#navbar-right').html(templateNavbarGuest({}));
+    $('#signin').click(oauthSignIn);
+  }
+  $('#main').removeClass('main-hidden');
+  $('#loader').hide();
 }
 
 require(['jquery', 'handlebars', 'prismjs', 'bootstrap'], ($, Handlebars, Prism) => {
-  init($, Handlebars, Prism);
+  initHome($, Handlebars, Prism);
 });
